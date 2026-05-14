@@ -16,5 +16,8 @@ systems into a centralized Azure solution.
 - Azure Monitor + KQL — observability
 - Key Vault + Managed Identities + RBAC — security
 
+## Project Structure 
+- Storage account setup and configuration - [Infrastructure](./infra/commands.md)
+
 ## Status
 🔨 In active development — May 2026
