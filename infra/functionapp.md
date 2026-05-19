@@ -27,3 +27,5 @@ pip install python-dotenv azure-storage-blob
 azure-storage-blob
 python-dotenv
 requests
+    - Azure Functions needs to know which packages to install when my code is deployed. Without this file, my function runs with no libraries and will fail
+    
