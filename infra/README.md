@@ -2,7 +2,7 @@
 Azure data platform simulating a bank's transaction and reporting pipeline
 
 
-# Infra
+# INFRA
 ## Storage Account Setup
 - Created ADLS Gen2 storage to create hierarchical namespace allowing for permissions to be given to users based on folders
 - TLS 1.2 used for secure encryption and compliance

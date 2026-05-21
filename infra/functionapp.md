@@ -27,5 +27,8 @@ pip install python-dotenv azure-storage-blob
 azure-storage-blob
 python-dotenv
 requests
+azure.identity (added after Azure gave an error when timer was invoked)
     - Azure Functions needs to know which packages to install when my code is deployed. Without this file, my function runs with no libraries and will fail
-    
+
+## Download Azure Function Tools (vscode)
+npm install -g azure-functions-core-tools@4 --unsafe-perm true

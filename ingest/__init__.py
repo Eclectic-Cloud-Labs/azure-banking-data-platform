@@ -5,35 +5,34 @@ from azure.storage.blob import BlobServiceClient
 from azure.identity import DefaultAzureCredential
 from dotenv import load_dotenv
 import os
+import azure.functions as func
 
 load_dotenv()
 account_url = os.getenv("ACCOUNT_URL")
 credentials = DefaultAzureCredential()
 
-def upload_blob():
-    local_dir = "data"
+# connects to container and creates and uploads the blob with API data 
+def upload_blob(filename, req):
+    # variable to connect to bronze container
     container_name = 'bronze'
     
+    # using blob_service_client to connect to the container to upload 
     blob_service_client = BlobServiceClient(account_url=account_url, credential = credentials)
     container_client = blob_service_client.get_container_client(container = container_name)
     
-    filenames = os.listdir(local_dir)
-    
-    for filename in filenames:
-        full_file_path = os.path.join(local_dir, filename)
-        with open(full_file_path, "r") as fl:
-            data = fl.read()
-            container_client.upload_blob(name = filename, data = data)
+    # specifies blob name and the data within the blob
+    container_client.upload_blob(name = filename, data = req)
 
-if __name__ == "__main__":
+# GET request is retrieved from API, converted from raw -> JSON and passed to upload_blob function
+# timer is retrieved from function.json (Azure Managed, hence no import) 
+def main(mytimer: func.TimerRequest) -> None:
     req = requests.get("https://api-web.nhle.com/v1/club-schedule-season/CGY/now")
-    local_dir = 'data'
-    filename = f"nhl-cgy-{datetime.now().strftime('%Y-%m-%d-%H')}.json"
-    full_file_path = os.path.join(local_dir, filename)
-    with open(full_file_path, "w") as file:
-        json.dump(req.json(), file, indent=4)
+    data = json.dumps(req.json())
+    filename = f"nhl-cgy-{datetime.now().strftime('%Y-%m-%d-%H-%M')}.json"
     
-    upload_blob()
-        
+    upload_blob(filename, data)
     
+# for local testing
+if __name__ == "__main__":
+    main(None)
 
