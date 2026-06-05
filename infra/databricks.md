@@ -28,3 +28,15 @@ databricks secrets list-secrets adls-scope
 - MI support in Databricks requires Unity Catalog setup — deferred to Phase 7
 - SP + Databricks Secrets is the standard pattern in enterprise Databricks environments
 
+## Databricks Job — NHL Ingestion Pipeline
+
+Job Name: nhl-cgy-pipeline
+Schedule (Cron): 0 30 6/12 * * * (6:30 AM and 6:30 PM UTC)
+
+Tasks (in order):
+1. bronze_to_silver - reads latest JSON file from bronze, then transforms, and writes to silver as delta
+2. silver_to_gold - reads silver delta table, aggregates W/L and goal differential, writes to gold as delta
+
+Dependencies: silver_to_gold depends on bronze_to_silver (All succeeded)
+Compute: All-purpose cluster
+Retries: 2 (silver_to_gold save format incorrect & overwrite not included)

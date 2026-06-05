@@ -14,6 +14,23 @@
 - Pulled data from silver blob - no sort function needed because of delta format (see below)
 - Transformed data into 2 different aggregated states (W/L for CGY, and GoalDifferential), then wrote to gold container as a delta format once again
 
+## Databricks Jobs & Pipeline Automation
+- Created a Databricks Job with two dependent tasks — `bronze_to_silver` runs first, `silver_to_gold` only runs if `bronze_to_silver` succeeds
+- Scheduled at `0 30 6/12 * * *` — fires at 6:30 AM and 6:30 PM UTC (12:30 AM and PM Mountain)
+- Aligns with Function App ingestion schedule — 30 minute buffer gives bronze time to land before transformation starts
+
+### Why Jobs over interactive notebooks
+- Notebooks are for development while jobs are for production
+- Job clusters spin up fresh when scheduled, run, then terminate resulting in lower cost than keeping an all purpose cluster running
+- Dependency chain ensures bad data never reaches gold. If bronze fails, silver and gold don't run
+ 
+
+### Why all succeeded dependency in databricks
+- All levels are modular (high availabilty and observability)
+- Without dependency, if bronze wrote corrupt or incomplete data, silver would transform bad data into gold
+- Fail fast at the source rather than propagating bad data downstream
+- Same principle banks use for pipeline reliability where one bad stage should never silently corrupt the next
+
 ### Why a delta format?
 - ACID transactions have no partial or corrupt writes if the pipeline fails - keeps all data intact. Great for banking transactions
 - Schema enforcement rejects bad data automatically
