@@ -1,0 +1,15 @@
+{
+	"name": "gurbo-nhl-factory",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "bce4f21b-71e3-4295-8ac1-5628cb012f5b",
+		"tenantId": "87e450d8-9ee3-4538-a4b3-3cb61e605824"
+	}
+}
