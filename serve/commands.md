@@ -10,6 +10,7 @@ az sql server firewall-rule create -g apiRG --server nhl-gurbo-sql-server --name
 
 # Allow Data Factory integration runtime
 az sql server firewall-rule create -g apiRG --server nhl-gurbo-sql-server --name AllowDataFactory --start-ip-address 20.42.3.136 --end-ip-address 20.42.3.136
+az sql server firewall-rule create -g apiRG --server nhl-gurbo-sql-server --name AllowDataFactory --start-ip-address 20.42.3.136 --end-ip-address 20.42.3.136
 
 ## Azure Data Factory
 az datafactory create --factory-name gurbo-nhl-factory --resource-group apiRG --location eastus
