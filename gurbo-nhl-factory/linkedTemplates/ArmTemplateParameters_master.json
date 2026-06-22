@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "gurbo-nhl-factory"
+		},
+		"AzureDataLakeStorage2_servicePrincipalCredential": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"value": "https://gurboapistorage.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_tenant": {
+			"value": "87e450d8-9ee3-4538-a4b3-3cb61e605824"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_servicePrincipalId": {
+			"value": "c5cf14eb-a54d-4ffa-98e7-441810223fac"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "nhl-gurbo-sql-server.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "nhl-gurbo-db"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "gk"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
