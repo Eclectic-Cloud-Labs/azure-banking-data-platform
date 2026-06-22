@@ -7,23 +7,7 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [
-			{
-				"name": "id",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "Wins",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "Losses",
-				"type": "int",
-				"precision": 10
-			}
-		],
+		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
 			"table": "GOALDIFF"

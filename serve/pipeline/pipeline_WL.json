@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "WL_pipe",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {

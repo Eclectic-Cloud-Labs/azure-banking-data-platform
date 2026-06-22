@@ -14,11 +14,12 @@
 				"precision": 10
 			},
 			{
-				"name": "OpponentTeamName",
-				"type": "varchar"
+				"name": "Wins",
+				"type": "int",
+				"precision": 10
 			},
 			{
-				"name": "OpponentGoalDiff",
+				"name": "Losses",
 				"type": "int",
 				"precision": 10
 			}
