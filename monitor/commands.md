@@ -59,18 +59,6 @@ az monitor diagnostic-settings create --name databricks-diag-settings --resource
 - Notifications: Email and azure mobile appp notification
 - Actions: No actions
 
-## KQL 
-### Successful runs per pipeline
-ADFActivityRun
-| where OperationName contains "succeeded"
-| summarize count() by OperationName
-
-### Unsuccessful Blob Storage runs
-StorageBlobLogs
-| where StatusText != "Success"
-| where StatusText != "ContainerAlreadyExists"
-| order by TimeGenerated desc
-
 
 
 
