@@ -23,6 +23,10 @@
 			"type": "string",
 			"defaultValue": "c5cf14eb-a54d-4ffa-98e7-441810223fac"
 		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://gurbovault.vault.azure.net/"
+		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "nhl-gurbo-sql-server.database.windows.net"
@@ -34,10 +38,6 @@
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "gk"
-		},
-		"AzureKeyVault1_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://gurbovault.vault.azure.net/"
 		}
 	},
 	"variables": {
@@ -172,7 +172,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": [],
-				"lastPublishTime": "2026-06-21T05:14:20Z"
+				"lastPublishTime": "2026-06-22T05:37:57Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Parquet1')]",
@@ -337,6 +337,20 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureKeyVault1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Pulls SP for ADLS Gen2",
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -387,20 +401,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/pipeline_WL')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureKeyVault1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Pulls SP for ADLS Gen2",
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
 		}
 	]
 }

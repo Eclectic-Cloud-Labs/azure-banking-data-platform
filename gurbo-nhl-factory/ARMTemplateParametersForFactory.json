@@ -17,6 +17,9 @@
 		"AzureDataLakeStorage2_properties_typeProperties_servicePrincipalId": {
 			"value": "c5cf14eb-a54d-4ffa-98e7-441810223fac"
 		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://gurbovault.vault.azure.net/"
+		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"value": "nhl-gurbo-sql-server.database.windows.net"
 		},
@@ -25,9 +28,6 @@
 		},
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
 			"value": "gk"
-		},
-		"AzureKeyVault1_properties_typeProperties_baseUrl": {
-			"value": "https://gurbovault.vault.azure.net/"
 		}
 	}
 }
