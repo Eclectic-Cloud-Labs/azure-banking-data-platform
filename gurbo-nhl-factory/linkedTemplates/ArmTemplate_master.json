@@ -7,10 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "gurbo-nhl-factory"
 		},
-		"AzureDataLakeStorage2_servicePrincipalCredential": {
-			"type": "secureString",
-			"metadata": "Secure string for 'servicePrincipalCredential' of 'AzureDataLakeStorage2'"
-		},
 		"AzureSqlDatabase1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
@@ -39,6 +35,10 @@
 			"type": "string",
 			"defaultValue": "gk"
 		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://gurbovault.vault.azure.net/"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -66,20 +66,8 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"AzureDataLakeStorage2_servicePrincipalCredential": {
-						"value": "[parameters('AzureDataLakeStorage2_servicePrincipalCredential')]"
-					},
 					"AzureSqlDatabase1_password": {
 						"value": "[parameters('AzureSqlDatabase1_password')]"
-					},
-					"AzureDataLakeStorage2_properties_typeProperties_url": {
-						"value": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]"
-					},
-					"AzureDataLakeStorage2_properties_typeProperties_tenant": {
-						"value": "[parameters('AzureDataLakeStorage2_properties_typeProperties_tenant')]"
-					},
-					"AzureDataLakeStorage2_properties_typeProperties_servicePrincipalId": {
-						"value": "[parameters('AzureDataLakeStorage2_properties_typeProperties_servicePrincipalId')]"
 					},
 					"AzureSqlDatabase1_properties_typeProperties_server": {
 						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
@@ -89,6 +77,18 @@
 					},
 					"AzureSqlDatabase1_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
+					},
+					"AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
+					"AzureDataLakeStorage2_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorage2_properties_typeProperties_tenant": {
+						"value": "[parameters('AzureDataLakeStorage2_properties_typeProperties_tenant')]"
+					},
+					"AzureDataLakeStorage2_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('AzureDataLakeStorage2_properties_typeProperties_servicePrincipalId')]"
 					}
 				}
 			},

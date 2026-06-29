@@ -7,10 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "gurbo-nhl-factory"
 		},
-		"AzureDataLakeStorage2_servicePrincipalCredential": {
-			"type": "secureString",
-			"metadata": "Secure string for 'servicePrincipalCredential' of 'AzureDataLakeStorage2'"
-		},
 		"AzureSqlDatabase1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
@@ -38,6 +34,10 @@
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "gk"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://gurbovault.vault.azure.net/"
 		}
 	},
 	"variables": {
@@ -323,12 +323,18 @@
 					"servicePrincipalId": "[parameters('AzureDataLakeStorage2_properties_typeProperties_servicePrincipalId')]",
 					"servicePrincipalCredentialType": "ServicePrincipalKey",
 					"servicePrincipalCredential": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDataLakeStorage2_servicePrincipalCredential')]"
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "AzureKeyVault1",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "sp-client-secret"
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
@@ -381,6 +387,20 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/pipeline_WL')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureKeyVault1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Pulls SP for ADLS Gen2",
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }

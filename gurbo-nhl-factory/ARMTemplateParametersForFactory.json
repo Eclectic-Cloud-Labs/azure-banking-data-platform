@@ -5,9 +5,6 @@
 		"factoryName": {
 			"value": "gurbo-nhl-factory"
 		},
-		"AzureDataLakeStorage2_servicePrincipalCredential": {
-			"value": ""
-		},
 		"AzureSqlDatabase1_password": {
 			"value": ""
 		},
@@ -28,6 +25,9 @@
 		},
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
 			"value": "gk"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://gurbovault.vault.azure.net/"
 		}
 	}
 }
