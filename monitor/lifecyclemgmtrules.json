@@ -1,0 +1,73 @@
+{
+    "rules": [
+        {
+            "name": "bronze",
+            "type": "Lifecycle",
+            "definition": {
+                "filters": {
+                    "blobTypes": [
+                        "blockBlob"
+                    ],
+                    "prefixMatch": [
+                        "bronze/"
+                    ]
+                },
+                "actions": {
+                    "baseBlob": {
+                        "delete": {
+                            "daysAfterModificationGreaterThan": 2
+                        }
+                    }
+                }
+            }   
+        },
+        {
+            "name": "silver",
+            "type": "Lifecycle",
+            "definition": {
+                "filters": {
+                    "blobTypes": [
+                        "blockBlob"
+                    ],
+                    "prefixMatch": [
+                        "silver/"
+                    ]
+                },
+                "actions": {
+                    "baseBlob": {
+                        "tierToCool": {
+                            "daysAfterModificationGreaterThan": 7
+                        },
+                        "delete": {
+                            "daysAfterModificationGreaterThan": 30
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "gold",
+            "type": "Lifecycle",
+            "definition": {
+                "filters": {
+                    "blobTypes": [
+                        "blockBlob"
+                    ],
+                    "prefixMatch": [
+                        "gold/"
+                    ]
+                },
+                "actions": {
+                    "baseBlob": {
+                        "tierToCool": {
+                            "daysAfterCreationGreaterThan": 7
+                        },
+                        "tierToArchive": {
+                            "daysAfterModificationGreaterThan": 14
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

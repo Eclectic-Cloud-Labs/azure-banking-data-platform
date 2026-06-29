@@ -38,7 +38,7 @@ Created five alert rules connected to the 'cibc-nhl-ops-team' action group:
 - Static threshold would generate false positives during normal low-activity periods
 
 
-## KQL Queries (monitor\queries.md)
+## KQL Queries (./monitor\queries.md)
 ### Successful runs per pipeline
 - Finds logs of all the successful runs per pipeline. Info is aggregated by a single number per pipeline, which can be correlated to how many times it should be running per day
 - Showed 2 different numbers as 2 different pipelines were created in ADF
@@ -61,7 +61,6 @@ Created five alert rules connected to the 'cibc-nhl-ops-team' action group:
 
 
 ## SLIs & SLOs
-
 ### Why define SLIs and SLOs
 At a bank, internal data platforms directly support business decisions such as risk assessments, reporting, and client recommendations all depend on accurate and efficient data. Without defining reliability targets, there's no objective way to know if the platform is meeting business expectations or silently degrading
 
@@ -82,3 +81,13 @@ At a bank, internal data platforms directly support business decisions such as r
 - **SLO:** 99% of queries must complete within 2 seconds
 - **Error Budget:** 1% of queries can exceed 2 seconds before breach
 - **Why:** Internal analysts querying standings and goal differential expect near-instant results. Slow queries erode trust in the platform and signal underlying performance issues - poor indexing, table bloat, or resource contention - that compound over time if left unmonitored.
+
+
+## Lifecycle Management Policies (./monitor\lifecyclemgmtrules.json)
+- Automated data retention across all three storage layers using Azure Storage lifecycle management rules
+- Policy applied directly to the storage account targeting each container by prefix
+
+
+## Cost Management
+- Monthly budget alert set at $10 with warning threshold at 80% ($8) and critical at 100% ($10)
+- Prevents unexpected spend from runaway resources or misconfigured pipelines
