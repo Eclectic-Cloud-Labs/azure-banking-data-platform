@@ -1,0 +1,7 @@
+{
+	"name": "AdfPeADLS",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/41815227-e64b-4134-881e-863dae07ca2f/resourceGroups/apiRG/providers/Microsoft.Storage/storageAccounts/gurboapistorage",
+		"groupId": "dfs"
+	}
+}
