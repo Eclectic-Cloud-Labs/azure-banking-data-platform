@@ -18,6 +18,10 @@
 				},
 				"secretName": "sp-client-secret"
 			}
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime1",
+			"type": "IntegrationRuntimeReference"
 		}
 	}
 }
