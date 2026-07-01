@@ -1,7 +1,0 @@
-{
-	"name": "ADFpeKeyvault",
-	"properties": {
-		"privateLinkResourceId": "/subscriptions/41815227-e64b-4134-881e-863dae07ca2f/resourceGroups/apiRG/providers/Microsoft.KeyVault/vaults/gurbovault",
-		"groupId": "vault"
-	}
-}
