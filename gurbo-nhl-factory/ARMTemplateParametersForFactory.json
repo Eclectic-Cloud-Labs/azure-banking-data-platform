@@ -28,6 +28,24 @@
 		},
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
 			"value": "gk"
+		},
+		"AdfPeADLS_properties_privateLinkResourceId": {
+			"value": "/subscriptions/41815227-e64b-4134-881e-863dae07ca2f/resourceGroups/apiRG/providers/Microsoft.Storage/storageAccounts/gurboapistorage"
+		},
+		"AdfPeADLS_properties_groupId": {
+			"value": "dfs"
+		},
+		"AdfPeSql_properties_privateLinkResourceId": {
+			"value": "/subscriptions/41815227-e64b-4134-881e-863dae07ca2f/resourceGroups/apiRG/providers/Microsoft.Sql/servers/nhl-gurbo-sql-server"
+		},
+		"AdfPeSql_properties_groupId": {
+			"value": "sqlServer"
+		},
+		"AzureKeyVault265_properties_privateLinkResourceId": {
+			"value": "/subscriptions/41815227-e64b-4134-881e-863dae07ca2f/resourceGroups/apiRG/providers/Microsoft.KeyVault/vaults/gurbovault"
+		},
+		"AzureKeyVault265_properties_groupId": {
+			"value": "vault"
 		}
 	}
 }

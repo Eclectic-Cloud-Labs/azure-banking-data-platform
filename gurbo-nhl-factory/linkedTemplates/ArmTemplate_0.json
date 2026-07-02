@@ -15,17 +15,29 @@
 			"type": "string",
 			"defaultValue": "https://gurbovault.vault.azure.net/"
 		},
-		"AzureSqlDatabase1_properties_typeProperties_server": {
+		"AdfPeADLS_properties_privateLinkResourceId": {
 			"type": "string",
-			"defaultValue": "nhl-gurbo-sql-server.database.windows.net"
+			"defaultValue": "/subscriptions/41815227-e64b-4134-881e-863dae07ca2f/resourceGroups/apiRG/providers/Microsoft.Storage/storageAccounts/gurboapistorage"
 		},
-		"AzureSqlDatabase1_properties_typeProperties_database": {
+		"AdfPeADLS_properties_groupId": {
 			"type": "string",
-			"defaultValue": "nhl-gurbo-db"
+			"defaultValue": "dfs"
 		},
-		"AzureSqlDatabase1_properties_typeProperties_userName": {
+		"AdfPeSql_properties_privateLinkResourceId": {
 			"type": "string",
-			"defaultValue": "gk"
+			"defaultValue": "/subscriptions/41815227-e64b-4134-881e-863dae07ca2f/resourceGroups/apiRG/providers/Microsoft.Sql/servers/nhl-gurbo-sql-server"
+		},
+		"AdfPeSql_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sqlServer"
+		},
+		"AzureKeyVault265_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/41815227-e64b-4134-881e-863dae07ca2f/resourceGroups/apiRG/providers/Microsoft.KeyVault/vaults/gurbovault"
+		},
+		"AzureKeyVault265_properties_groupId": {
+			"type": "string",
+			"defaultValue": "vault"
 		},
 		"AzureDataLakeStorage2_properties_typeProperties_url": {
 			"type": "string",
@@ -38,6 +50,18 @@
 		"AzureDataLakeStorage2_properties_typeProperties_servicePrincipalId": {
 			"type": "string",
 			"defaultValue": "c5cf14eb-a54d-4ffa-98e7-441810223fac"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "nhl-gurbo-sql-server.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "nhl-gurbo-db"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "gk"
 		}
 	},
 	"variables": {
@@ -49,7 +73,6 @@
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "Pulls SP for ADLS Gen2",
 				"annotations": [],
 				"type": "AzureKeyVault",
 				"typeProperties": {
@@ -57,6 +80,114 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+			"apiVersion": "2018-06-01",
+			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime1')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"description": "connects to gurboVnet",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "East US",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 10,
+							"cleanup": false,
+							"customProperties": []
+						},
+						"pipelineExternalComputeScaleProperties": {
+							"timeToLive": 60,
+							"numberOfPipelineNodes": 1,
+							"numberOfExternalNodes": 1
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/AdfPeADLS')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('AdfPeADLS_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('AdfPeADLS_properties_groupId')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/AdfPeSql')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('AdfPeSql_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('AdfPeSql_properties_groupId')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/AzureKeyVault265')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('AzureKeyVault265_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('AzureKeyVault265_properties_groupId')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]",
+					"azureCloudType": "AzurePublic",
+					"tenant": "[parameters('AzureDataLakeStorage2_properties_typeProperties_tenant')]",
+					"servicePrincipalId": "[parameters('AzureDataLakeStorage2_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalCredentialType": "ServicePrincipalKey",
+					"servicePrincipalCredential": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "AzureKeyVault1",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "sp-client-secret"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
@@ -76,9 +207,15 @@
 						"type": "SecureString",
 						"value": "[parameters('AzureSqlDatabase1_password')]"
 					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
@@ -136,33 +273,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]",
-					"azureCloudType": "AzurePublic",
-					"tenant": "[parameters('AzureDataLakeStorage2_properties_typeProperties_tenant')]",
-					"servicePrincipalId": "[parameters('AzureDataLakeStorage2_properties_typeProperties_servicePrincipalId')]",
-					"servicePrincipalCredentialType": "ServicePrincipalKey",
-					"servicePrincipalCredential": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "AzureKeyVault1",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "sp-client-secret"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault1')]"
 			]
 		},
 		{
@@ -259,6 +369,8 @@
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
 									"recursive": true,
+									"wildcardFolderPath": "CGY_WinLoss",
+									"wildcardFileName": "*.parquet",
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
@@ -315,6 +427,8 @@
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
 									"recursive": true,
+									"wildcardFolderPath": "CGY_GoalDiff",
+									"wildcardFileName": "*.parquet",
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {

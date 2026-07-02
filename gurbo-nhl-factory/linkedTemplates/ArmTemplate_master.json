@@ -39,6 +39,30 @@
 			"type": "string",
 			"defaultValue": "gk"
 		},
+		"AdfPeADLS_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/41815227-e64b-4134-881e-863dae07ca2f/resourceGroups/apiRG/providers/Microsoft.Storage/storageAccounts/gurboapistorage"
+		},
+		"AdfPeADLS_properties_groupId": {
+			"type": "string",
+			"defaultValue": "dfs"
+		},
+		"AdfPeSql_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/41815227-e64b-4134-881e-863dae07ca2f/resourceGroups/apiRG/providers/Microsoft.Sql/servers/nhl-gurbo-sql-server"
+		},
+		"AdfPeSql_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sqlServer"
+		},
+		"AzureKeyVault265_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/41815227-e64b-4134-881e-863dae07ca2f/resourceGroups/apiRG/providers/Microsoft.KeyVault/vaults/gurbovault"
+		},
+		"AzureKeyVault265_properties_groupId": {
+			"type": "string",
+			"defaultValue": "vault"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -72,14 +96,23 @@
 					"AzureKeyVault1_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
 					},
-					"AzureSqlDatabase1_properties_typeProperties_server": {
-						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
+					"AdfPeADLS_properties_privateLinkResourceId": {
+						"value": "[parameters('AdfPeADLS_properties_privateLinkResourceId')]"
 					},
-					"AzureSqlDatabase1_properties_typeProperties_database": {
-						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]"
+					"AdfPeADLS_properties_groupId": {
+						"value": "[parameters('AdfPeADLS_properties_groupId')]"
 					},
-					"AzureSqlDatabase1_properties_typeProperties_userName": {
-						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
+					"AdfPeSql_properties_privateLinkResourceId": {
+						"value": "[parameters('AdfPeSql_properties_privateLinkResourceId')]"
+					},
+					"AdfPeSql_properties_groupId": {
+						"value": "[parameters('AdfPeSql_properties_groupId')]"
+					},
+					"AzureKeyVault265_properties_privateLinkResourceId": {
+						"value": "[parameters('AzureKeyVault265_properties_privateLinkResourceId')]"
+					},
+					"AzureKeyVault265_properties_groupId": {
+						"value": "[parameters('AzureKeyVault265_properties_groupId')]"
 					},
 					"AzureDataLakeStorage2_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]"
@@ -89,6 +122,15 @@
 					},
 					"AzureDataLakeStorage2_properties_typeProperties_servicePrincipalId": {
 						"value": "[parameters('AzureDataLakeStorage2_properties_typeProperties_servicePrincipalId')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
 					}
 				}
 			},
